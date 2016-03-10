@@ -1,7 +1,7 @@
 counterApp.factory('ExampleFactory', function(){
   var UserFactory = function() {
     this.currentTime = Date();
-  }
+  };
 
   UserFactory.prototype.storeTime = function() {
     this.currentTime = Date();
@@ -9,6 +9,7 @@ counterApp.factory('ExampleFactory', function(){
 
   return UserFactory;
 });
+
 
 counterApp.service('ExampleService', function(){
   this.currentTime = Date();
@@ -18,28 +19,49 @@ counterApp.service('ExampleService', function(){
   };
 });
 
+
+counterApp.factory('HarryFactory', function() {
+  var SeperateFactories = function() {
+    this.count = 0;
+  };
+
+  SeperateFactories.prototype.increase = function() {
+    this.count ++;
+  };
+
+  SeperateFactories.prototype.decrease = function() {
+    this.count --;
+  };
+
+  return SeperateFactories;
+});
+
+counterApp.service('HarryService', function() {
+  this.count = 0;
+
+  this.increase = function() {
+    this.count ++;
+  };
+
+  this.decrease = function() {
+    this.count --;
+  };
+});
+
 counterApp.controller('ExampleCtrl', function(ExampleFactory, ExampleService){
 
   var self = this;
 
-  self.exampleFactory = new ExampleFactory;
+  self.exampleFactory = new ExampleFactory();
   self.exampleService = ExampleService;
 });
 
-counterApp.controller('CounterCtrl', function(){
+
+
+
+counterApp.controller('CounterCtrl', function(HarryService){
+
   var self = this;
 
-  self.counters = [{count: 0}, {count: 0}];
-
-  // Now add buttons
-  self.increment = function(counter) {
-    counter.count++;
-  };
-
-  // Now get them to build this using a basic app, and add decrement
-  // Now add a second counter
-  // Now add five counters
-  self.decrement = function(counter) {
-    counter.count--;
-  };
+  self.exampleCount = HarryService;
 });
